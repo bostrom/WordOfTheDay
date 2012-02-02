@@ -1,21 +1,3 @@
-################################################
-#################### ABOUT #####################
-################################################
-#
-# UrbanWordOfTheDay-0.4 by Fredrik Bostrom
-# for Eggdrop IRC bot
-# Released 2008-05-12
-#
-# Usage:
-# !word
-#   - gets the word of the day from 
-#     urbandictionary.com and displays it on 
-#     the channel
-#
-################################################
-######## DON'T EDIT BEOYND THIS LINE! ##########
-################################################
-
 package require tdom
 package require http
 
