@@ -14,24 +14,24 @@ proc pub:wordoftheday {nick host handle chan text} {
 	set root [$doc documentElement]
 
 	set titleNode [$root selectNodes {//div[@class='word']/a[1]/text()}]
-	
+
 	if {$titleNode == ""} {
 	    set titleNode [$root selectNodes {//td[@class='def_word']/a[1]/text()}]
 	}
-	
+
 	set title [string trim [[lindex $titleNode 0] nodeValue]]
 	putserv "PRIVMSG $chan :Word of the day is: \002$title\002"
-	
+
 	set defs [$root selectNodes {//div[@class='definition']}]
 	if {$defs != ""} {
 	    set deftextnodes [[lindex $defs 0] selectNodes {self::*//text()}]
-	    
+
 	    set examples [$root selectNodes {//div[@class='example']}]
 	    set exampletextnodes [[lindex $examples 0] selectNodes {self::*//text()}]
-	    
+
 	    set def ""
 	    set example ""
-	    
+
 	    foreach node $deftextnodes {
 		# why doesn't eggdrop output newlines?
 		# it just stops outputting when newline comes up
@@ -39,7 +39,7 @@ proc pub:wordoftheday {nick host handle chan text} {
 		append def " "
 	    }
 	    putserv "PRIVMSG $chan :$def"
-	    
+
 	    foreach node $exampletextnodes {
 		# why doesn't eggdrop output newlines?
 		# it just stops outputting when newline comes up
@@ -49,7 +49,7 @@ proc pub:wordoftheday {nick host handle chan text} {
 	    putserv "PRIVMSG $chan :$example"
 	} else {
 	    set parags [$root selectNodes {//tr[2]//p}]
-	    
+
 	    foreach p $parags {
 		set text ""
 		set textnodes [$p selectNodes {self::*//text()}]
@@ -60,7 +60,7 @@ proc pub:wordoftheday {nick host handle chan text} {
 		}
 		putserv "PRIVMSG $chan :$text"
 	    }
-	    
+
 	}
     } err]} {
 	putserv "PRIVMSG $chan :WotD failed - $err"
